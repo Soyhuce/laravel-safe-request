@@ -6,3 +6,4 @@ use Soyhuce\LaravelSafeRequest\Tests\Fixtures\Status;
 use function PHPStan\Testing\assertType;
 
 assertType('Soyhuce\\LaravelSafeRequest\\Tests\\Fixtures\\Status|null', $formRequest->safeEnum('foo', Status::class));
+assertType('Carbon\\CarbonImmutable|null', $formRequest->safeDate('foo'));

@@ -4,3 +4,6 @@ includes:
 
 parameters:
     level: 8
+    bootstrapFiles:
+        - ../../vendor/nunomaduro/larastan/bootstrap.php
+        - bootstrap.php
