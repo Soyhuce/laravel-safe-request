@@ -1,4 +1,6 @@
 services:
-      - class: Soyhuce\LaravelSafeRequest\PHPStan\ReturnTypes\FormRequestSafeEnumReturnTypeExtension
-        tags:
-          - phpstan.broker.dynamicMethodReturnTypeExtension
+  - class: Soyhuce\LaravelSafeRequest\PHPStan\ReturnTypes\FormRequestSafeEnumReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicMethodReturnTypeExtension
+
+  - class: Soyhuce\LaravelSafeRequest\PHPStan\Rules\NoFormRequestUnsafeCall
