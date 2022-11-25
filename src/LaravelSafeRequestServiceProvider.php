@@ -2,6 +2,7 @@
 
 namespace Soyhuce\LaravelSafeRequest;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -11,5 +12,10 @@ class LaravelSafeRequestServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-safe-request');
+    }
+
+    public function packageBooted(): void
+    {
+        FormRequest::mixin(new FormRequestMixin());
     }
 }

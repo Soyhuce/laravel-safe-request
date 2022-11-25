@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Anonymous function should return DateTimeInterface\\|null but returns Illuminate\\\\Support\\\\Carbon\\|false\\.$#"
+			count: 1
+			path: src/FormRequestMixin.php

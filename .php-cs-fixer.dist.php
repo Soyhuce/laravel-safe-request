@@ -401,7 +401,7 @@ return (new PhpCsFixer\Config())
         'semicolon_after_instruction' => true,
         'set_type_to_cast' => true,
         'simple_to_complex_string_variable' => true,
-        'simplified_null_return' => true,
+        'simplified_null_return' => false,
         'single_class_element_per_statement' => [
             'elements' => [
                 0 => 'const',
