@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "soyhuce/laravel-safe-request",
+    "description": "FormRequest helpers using validated data",
     "keywords": [
-        ":vendor_name",
+        "Soyhuce",
         "laravel",
-        ":package_slug"
+        "laravel-safe-request"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/soyhuce/laravel-safe-request",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Bastien Philippe",
+            "email": "bastien.philippe@soyhuce.fr",
             "role": "Developer"
         }
     ],
@@ -34,13 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Soyhuce\\LaravelSafeRequest\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Soyhuce\\LaravelSafeRequest\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -65,11 +64,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "Soyhuce\\LaravelSafeRequest\\LaravelSafeRequestServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",
