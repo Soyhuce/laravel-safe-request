@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 0.2.0 - 2023-02-27
+
+### What's Changed
+
+- Bump dependabot/fetch-metadata from 1.3.5 to 1.3.6 by @dependabot in https://github.com/Soyhuce/laravel-safe-request/pull/3
+- Laravel 10 support by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/4
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/0.1.1...0.2.0
+
 ## 0.1.1 - 2023-02-27
 
 ### What's Changed
