@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Stringable;
-use function function_exists;
 use function is_array;
 
 /**
@@ -17,12 +16,29 @@ use function is_array;
 class FormRequestMixin
 {
     /**
-     * Retrieve input from the request as a Stringable instance.
+     * Retrieve input from the request as a string.
      */
     public function safeString(): Closure
     {
-        return function (string $key, mixed $default = null): Stringable {
-            return str($this->validated($key, $default));
+        return function (string $key, string $default = ''): string {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => (string) $value,
+                $default
+            );
+        };
+    }
+
+    /**
+     * Retrieve input from the request as a nullable string.
+     */
+    public function safeNullableString(): Closure
+    {
+        return function (string $key): ?string {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => (string) $value
+            );
         };
     }
 
@@ -33,8 +49,27 @@ class FormRequestMixin
      */
     public function safeBoolean(): Closure
     {
-        return function (?string $key = null, bool $default = false): bool {
-            return filter_var($this->validated($key, $default), FILTER_VALIDATE_BOOLEAN);
+        return function (string $key, bool $default = false): bool {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default,
+                $default
+            );
+        };
+    }
+
+    /**
+     * Retrieve input as a nullable boolean value.
+     *
+     * Returns true when value is "1", "true", "on", and "yes". Otherwise, returns false.
+     */
+    public function safeNullableBoolean(): Closure
+    {
+        return function (string $key): ?bool {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)
+            );
         };
     }
 
@@ -44,7 +79,24 @@ class FormRequestMixin
     public function safeInteger(): Closure
     {
         return function (string $key, int $default = 0): int {
-            return (int) $this->validated($key, $default);
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE) ?? $default,
+                $default
+            );
+        };
+    }
+
+    /**
+     * Retrieve input as an nullable integer value.
+     */
+    public function safeNullableInteger(): Closure
+    {
+        return function (string $key): ?int {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE),
+            );
         };
     }
 
@@ -54,27 +106,101 @@ class FormRequestMixin
     public function safeFloat(): Closure
     {
         return function (string $key, float $default = 0.0): float {
-            return (float) $this->input($key, $default);
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE) ?? $default,
+                $default
+            );
         };
     }
 
     /**
-     * Retrieve input from the request as a Carbon instance.
+     * Retrieve input as a nullable float value.
+     */
+    public function safeNullableFloat(): Closure
+    {
+        return function (string $key): ?float {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE)
+            );
+        };
+    }
+
+    /**
+     * Retrieve input from the request as a Stringable.
+     */
+    public function safeStr(): Closure
+    {
+        return function (string $key, string $default = ''): Stringable {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => str((string) $value),
+                str($default)
+            );
+        };
+    }
+
+    /**
+     * Retrieve input from the request as a Stringable.
+     */
+    public function safeNullableStr(): Closure
+    {
+        return function (string $key): ?Stringable {
+            return transform(
+                $this->validated($key),
+                fn (mixed $value) => str((string) $value)
+            );
+        };
+    }
+
+    /**
+     * Retrieve input from the request as a DateTimeInterface instance.
      *
      * @throws \Carbon\Exceptions\InvalidFormatException
      */
     public function safeDate(): Closure
     {
+        return function (string $key, ?string $format = null, ?string $tz = null, $default = 'now'): DateTimeInterface {
+            return transform(
+                $this->validated($key) ?? $default,
+                function (mixed $value) use ($format, $tz) {
+                    if ($value instanceof DateTimeInterface) {
+                        return $value;
+                    }
+
+                    if (null === $format) {
+                        return Date::parse($value, $tz);
+                    }
+
+                    return Date::createFromFormat($format, $value, $tz);
+                },
+            );
+        };
+    }
+
+    /**
+     * Retrieve input from the request as a nullable DateTimeInterface instance.
+     *
+     * @throws \Carbon\Exceptions\InvalidFormatException
+     */
+    public function safeNullableDate(): Closure
+    {
         return function (string $key, ?string $format = null, ?string $tz = null): ?DateTimeInterface {
-            if ($this->validated($key) === null || $this->isNotFilled($key)) {
-                return null;
-            }
+            return transform(
+                $this->validated($key),
+                function (mixed $value) use ($format, $tz) {
+                    if ($value instanceof DateTimeInterface) {
+                        return $value;
+                    }
 
-            if (null === $format) {
-                return Date::parse($this->input($key), $tz);
-            }
+                    if (null === $format) {
+                        return Date::parse($value, $tz);
+                    }
 
-            return Date::createFromFormat($format, $this->input($key), $tz);
+                    return Date::createFromFormat($format, $value, $tz);
+                },
+            );
         };
     }
 
@@ -83,16 +209,36 @@ class FormRequestMixin
      */
     public function safeEnum(): Closure
     {
-        return function (string $key, string $enumClass) {
-            if ($this->validated($key) === null
-                || $this->isNotFilled($key)
-                || !function_exists('enum_exists')
-                || !enum_exists($enumClass)
-                || !method_exists($enumClass, 'tryFrom')) {
-                return null;
-            }
+        return function (string $key, string $enumClass, $default = null): object {
+            return transform(
+                $this->validated($key) ?? $default,
+                function (mixed $value) use ($enumClass) {
+                    if ($value instanceof $enumClass) {
+                        return $value;
+                    }
 
-            return $enumClass::tryFrom($this->input($key));
+                    return $enumClass::from($value);
+                },
+            );
+        };
+    }
+
+    /**
+     * Retrieve input from the request as a nullable enum.
+     */
+    public function safeNullableEnum(): Closure
+    {
+        return function (string $key, string $enumClass): ?object {
+            return transform(
+                $this->validated($key),
+                function (mixed $value) use ($enumClass) {
+                    if ($value instanceof $enumClass) {
+                        return $value;
+                    }
+
+                    return $enumClass::tryFrom($value);
+                },
+            );
         };
     }
 
