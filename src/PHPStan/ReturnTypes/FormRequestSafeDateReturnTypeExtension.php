@@ -9,7 +9,6 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PHPStan\Type\TypeCombinator;
 
 class FormRequestSafeDateReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
@@ -28,6 +27,6 @@ class FormRequestSafeDateReturnTypeExtension implements DynamicMethodReturnTypeE
         MethodCall $methodCall,
         Scope $scope,
     ): Type {
-        return TypeCombinator::addNull(new ObjectType(now()::class));
+        return new ObjectType(now()::class);
     }
 }

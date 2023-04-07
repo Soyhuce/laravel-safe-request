@@ -12,8 +12,9 @@ use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\NeverType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeCombinator;
 
-class FormRequestSafeEnumReturnTypeExtension implements DynamicMethodReturnTypeExtension
+class FormRequestSafeNullableEnumReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass(): string
     {
@@ -22,7 +23,7 @@ class FormRequestSafeEnumReturnTypeExtension implements DynamicMethodReturnTypeE
 
     public function isMethodSupported(MethodReflection $methodReflection): bool
     {
-        return $methodReflection->getName() === 'safeEnum';
+        return $methodReflection->getName() === 'safeNullableEnum';
     }
 
     public function getTypeFromMethodCall(
@@ -32,7 +33,7 @@ class FormRequestSafeEnumReturnTypeExtension implements DynamicMethodReturnTypeE
     ): Type {
         $expr = $methodCall->getArgs()[1]->value;
         if ($expr instanceof ClassConstFetch && $expr->class instanceof FullyQualified) {
-            return new ObjectType($expr->class->toString());
+            return TypeCombinator::addNull(new ObjectType($expr->class->toString()));
         }
 
         return new NeverType();

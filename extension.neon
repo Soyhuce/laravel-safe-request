@@ -5,6 +5,11 @@ services:
   - class: Soyhuce\LaravelSafeRequest\PHPStan\ReturnTypes\FormRequestSafeEnumReturnTypeExtension
     tags:
       - phpstan.broker.dynamicMethodReturnTypeExtension
-
+  - class: Soyhuce\LaravelSafeRequest\PHPStan\ReturnTypes\FormRequestSafeNullableDateReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicMethodReturnTypeExtension
+  - class: Soyhuce\LaravelSafeRequest\PHPStan\ReturnTypes\FormRequestSafeNullableEnumReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicMethodReturnTypeExtension
 rules:
   - Soyhuce\LaravelSafeRequest\PHPStan\Rules\NoFormRequestUnsafeCall

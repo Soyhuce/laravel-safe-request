@@ -57,7 +57,8 @@ class NoFormRequestUnsafeCall implements Rule
     private function formatError(string $method): string
     {
         $safeMethod = 'safe' . Str::ucfirst($method);
+        $safeNullableMethod = 'safeNullable' . Str::ucfirst($method);
 
-        return "Usage of FormRequest::{$method} can be unsafe, prefer using validated data through {$safeMethod} method.";
+        return "Usage of FormRequest::{$method} can be unsafe, prefer using validated data through {$safeMethod} or {$safeNullableMethod} methods.";
     }
 }
