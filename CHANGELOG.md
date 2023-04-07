@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 0.3.0 - 2023-04-07
+
+### What's Changed
+
+- Add phpstan extension resolver configuration by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/5
+- Add nullable safe methods, make classic methods null safe by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/6
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/0.2.0...0.3.0
+
 ## 0.2.0 - 2023-02-27
 
 ### What's Changed
