@@ -69,6 +69,11 @@
             "providers": [
                 "Soyhuce\\LaravelSafeRequest\\LaravelSafeRequestServiceProvider"
             ]
+        },
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
         }
     },
     "minimum-stability": "dev",
