@@ -5,7 +5,7 @@
 use Soyhuce\LaravelSafeRequest\Tests\Fixtures\Status;
 use function PHPStan\Testing\assertType;
 
-assertType('Soyhuce\\LaravelSafeRequest\\Tests\\Fixtures\\Status', $formRequest->safeEnum('foo', Status::class));
+assertType(\Soyhuce\LaravelSafeRequest\Tests\Fixtures\Status::class, $formRequest->safeEnum('foo', Status::class));
 assertType('Soyhuce\\LaravelSafeRequest\\Tests\\Fixtures\\Status|null', $formRequest->safeNullableEnum('foo', Status::class));
-assertType('Carbon\\CarbonImmutable', $formRequest->safeDate('foo'));
+assertType(\Carbon\CarbonImmutable::class, $formRequest->safeDate('foo'));
 assertType('Carbon\\CarbonImmutable|null', $formRequest->safeNullableDate('foo'));
