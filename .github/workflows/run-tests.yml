@@ -22,7 +22,7 @@ jobs:
           - laravel: 11.*
             testbench: 9.*
     
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - PU${{ matrix.phpunit }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
     
     steps:
       - name: Checkout code
