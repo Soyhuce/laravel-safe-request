@@ -15,16 +15,12 @@ jobs:
         os: [ubuntu-latest]
         php: [8.2, 8.3]
         laravel: [10.*, 11.*]
-        phpunit: [^10.0]
         stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: 10.*
             testbench: 8.*
           - laravel: 11.*
             testbench: 9.*
-        exclude:
-          - laravel: 11.*
-            laravel-data: ^3.9
     
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - PU${{ matrix.phpunit }} - ${{ matrix.stability }} - ${{ matrix.os }}
     
@@ -46,7 +42,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "phpunit/phpunit:${{ matrix.phpunit }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
       
       - name: Execute tests
