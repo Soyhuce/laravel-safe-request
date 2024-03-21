@@ -4,6 +4,9 @@ namespace Soyhuce\LaravelSafeRequest\Tests\PHPStan;
 
 use PHPStan\Testing\TypeInferenceTestCase;
 
+/**
+ * @coversNothing
+ */
 class TypeTest extends TypeInferenceTestCase
 {
     /**

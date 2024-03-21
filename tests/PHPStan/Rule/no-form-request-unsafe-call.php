@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-/** @var \Illuminate\Foundation\Http\FormRequest $formRequest */
+/** @var Illuminate\Foundation\Http\FormRequest $formRequest */
 
 use Soyhuce\LaravelSafeRequest\Tests\Fixtures\Status;
 

@@ -148,7 +148,7 @@ class FormRequestMixin
                     return $value;
                 }
 
-                if (null === $format) {
+                if ($format === null) {
                     return Date::parse($value, $tz);
                 }
 
@@ -171,7 +171,7 @@ class FormRequestMixin
                     return $value;
                 }
 
-                if (null === $format) {
+                if ($format === null) {
                     return Date::parse($value, $tz);
                 }
 

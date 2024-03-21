@@ -6,6 +6,9 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use Soyhuce\LaravelSafeRequest\PHPStan\Rules\NoFormRequestUnsafeCall;
 
+/**
+ * @coversNothing
+ */
 class NoFormRequestUnsafeCallTest extends RuleTestCase
 {
     protected function getRule(): Rule
