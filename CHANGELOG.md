@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 1.1.0 - 2024-03-21
+
+### What's Changed
+
+* Laravel 11 support by @ElRochito in https://github.com/Soyhuce/laravel-safe-request/pull/14
+
+### New Contributors
+
+* @ElRochito made their first contribution in https://github.com/Soyhuce/laravel-safe-request/pull/14
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/1.0.0...1.1.0
+
 ## 1.0.0 - 2023-11-24
 
 ### What's Changed
