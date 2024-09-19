@@ -187,7 +187,7 @@ class FormRequestMixin
     {
         return fn (string $key, string $enumClass, $default = null): object => transform(
             $this->validated($key) ?? $default,
-            function (mixed $value) use ($enumClass) {
+            function (mixed $value) use ($enumClass): object {
                 if ($value instanceof $enumClass) {
                     return $value;
                 }
@@ -204,7 +204,7 @@ class FormRequestMixin
     {
         return fn (string $key, string $enumClass): ?object => transform(
             $this->validated($key),
-            function (mixed $value) use ($enumClass) {
+            function (mixed $value) use ($enumClass): ?object {
                 if ($value instanceof $enumClass) {
                     return $value;
                 }
@@ -219,6 +219,43 @@ class FormRequestMixin
      */
     public function safeCollect(): Closure
     {
-        return fn (array|string|null $key = null): Collection => new Collection(is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key));
+        return fn (array|string|null $key = null, Collection $default = new Collection()): Collection => Collection::wrap(
+            (is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key)) ?? $default
+        );
+    }
+
+    /**
+     * Retrieve input from the request as a nullable collection.
+     */
+    public function safeNullableCollect(): Closure
+    {
+        return function (array|string|null $key = null): ?Collection {
+            $value = is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key);
+
+            if ($value === null) {
+                return null;
+            }
+
+            return Collection::wrap($value);
+        };
+    }
+
+    /**
+     * Retrieve input from the request as an array.
+     */
+    public function safeArray(): Closure
+    {
+        return fn (array|string|null $key = null, array $default = []): array => (is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key))
+            ?? $default;
+    }
+
+    /**
+     * Retrieve input from the request as a nullable array.
+     */
+    public function safeNullableArray(): Closure
+    {
+        return fn (array|string|null $key = null): ?array => is_array($key)
+                ? Arr::only($this->validated(), $key)
+                : $this->validated($key);
     }
 }
