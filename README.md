@@ -1,9 +1,9 @@
 # FormRequest helpers using validated data
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/soyhuce/laravel-safe-request.svg?style=flat-square)](https://packagist.org/packages/soyhuce/laravel-safe-request)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/soyhuce/laravel-safe-request/run-tests?label=tests)](https://github.com/soyhuce/laravel-safe-request/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/soyhuce/laravel-safe-request/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/soyhuce/laravel-safe-request/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![GitHub PHPStan Action Status](https://img.shields.io/github/workflow/status/soyhuce/laravel-safe-request/PHPStan?label=phpstan)](https://github.com/soyhuce/laravel-safe-request/actions?query=workflow%3APHPStan+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/soyhuce/laravel-safe-request/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/soyhuce/laravel-safe-request/actions/workflows/run-tests.yml)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/soyhuce/laravel-safe-request/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/soyhuce/laravel-safe-request/actions/workflows/phpstan.yml)
+[![GitHub PHPStan Action Status](https://img.shields.io/github/actions/workflow/status/soyhuce/laravel-safe-request/php-cs-fixer.yml?branch=main&label=php-cs-fixer&style=flat-square)](https://github.com/soyhuce/laravel-safe-request/actions/workflows/php-cs-fixer.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/soyhuce/laravel-safe-request.svg?style=flat-square)](https://packagist.org/packages/soyhuce/laravel-safe-request)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
