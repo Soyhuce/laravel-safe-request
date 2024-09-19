@@ -172,18 +172,98 @@ it('gets form request input as collection', function (): void {
             'foo' => [1, 2, 3],
             'bar' => 'ko',
             'baz' => 'foo',
+            'toto' => [],
         ],
         [
             'foo' => 'array',
             'foo.*' => 'integer',
             'bar' => 'string',
+            'toto' => 'array',
         ]
     );
 
     expect($request)
         ->safeCollect('foo')->all()->toBe([1, 2, 3])
         ->safeCollect(['bar'])->all()->toBe(['bar' => 'ko'])
-        ->safeCollect()->all()->toBe(['bar' => 'ko', 'foo' => [1, 2, 3]])
+        ->safeCollect()->all()->toBe(['bar' => 'ko', 'toto' => [], 'foo' => [1, 2, 3]])
         ->safeCollect(['foo', 'bar'])->all()->toBe(['bar' => 'ko', 'foo' => [1, 2, 3]])
-        ->safeCollect('baz')->toBeEmpty();
+        ->safeCollect('baz')->all()->toBe([])
+        ->safeCollect('toto')->all()->toBe([]);
+});
+
+it('gets form request input as nullable collection', function (): void {
+    $request = formRequest(
+        [
+            'foo' => [1, 2, 3],
+            'bar' => null,
+            'baz' => 'foo',
+            'toto' => [],
+        ],
+        [
+            'foo' => 'array',
+            'foo.*' => 'integer',
+            'bar' => 'nullable|string',
+            'toto' => 'array',
+        ]
+    );
+
+    expect($request)
+        ->safeNullableCollect('foo')->all()->toBe([1, 2, 3])
+        ->safeNullableCollect('bar')->toBeNull()
+        ->safeNullableCollect(['bar'])->all()->toBe(['bar' => null])
+        ->safeNullableCollect()->all()->toBe(['bar' => null, 'toto' => [], 'foo' => [1, 2, 3]])
+        ->safeNullableCollect(['foo', 'bar'])->all()->toBe(['bar' => null, 'foo' => [1, 2, 3]])
+        ->safeNullableCollect('baz')->toBeNull()
+        ->safeNullableCollect('toto')->all()->toBe([]);
+});
+
+it('gets form request input as array', function (): void {
+    $request = formRequest(
+        [
+            'foo' => [1, 2, 3],
+            'bar' => 'ko',
+            'baz' => 'foo',
+            'toto' => [],
+        ],
+        [
+            'foo' => 'array',
+            'foo.*' => 'integer',
+            'bar' => 'string',
+            'toto' => 'array',
+        ]
+    );
+
+    expect($request)
+        ->safeArray('foo')->toBe([1, 2, 3])
+        ->safeArray(['bar'])->toBe(['bar' => 'ko'])
+        ->safeArray()->toBe(['bar' => 'ko', 'toto' => [], 'foo' => [1, 2, 3]])
+        ->safeArray(['foo', 'bar'])->toBe(['bar' => 'ko', 'foo' => [1, 2, 3]])
+        ->safeArray('baz')->toBe([])
+        ->safeArray('toto')->toBe([]);
+});
+
+it('gets form request input as nullable array', function (): void {
+    $request = formRequest(
+        [
+            'foo' => [1, 2, 3],
+            'bar' => null,
+            'baz' => 'foo',
+            'toto' => [],
+        ],
+        [
+            'foo' => 'array',
+            'foo.*' => 'integer',
+            'bar' => 'nullable|string',
+            'toto' => 'array',
+        ]
+    );
+
+    expect($request)
+        ->safeNullableArray('foo')->toBe([1, 2, 3])
+        ->safeNullableArray('bar')->toBeNull()
+        ->safeNullableArray(['bar'])->toBe(['bar' => null])
+        ->safeNullableArray()->toBe(['bar' => null, 'toto' => [], 'foo' => [1, 2, 3]])
+        ->safeNullableArray(['foo', 'bar'])->toBe(['bar' => null, 'foo' => [1, 2, 3]])
+        ->safeNullableArray('baz')->toBeNull()
+        ->safeNullableArray('toto')->toBe([]);
 });

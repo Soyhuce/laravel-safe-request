@@ -9,3 +9,8 @@ parameters:
 			message: "#^Anonymous function should return DateTimeInterface\\|null but returns bool\\|DateTimeInterface\\|null\\.$#"
 			count: 1
 			path: src/FormRequestMixin.php
+
+		-
+			message: "#^Anonymous function should return object but returns object\\|null\\.$#"
+			count: 1
+			path: src/FormRequestMixin.php
