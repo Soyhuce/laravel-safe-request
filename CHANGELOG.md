@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 1.2.0 - 2024-09-19
+
+### What's Changed
+
+* Add safeNullableCollect, safeArray and safeNullableArray by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/17
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.1.0 by @dependabot in https://github.com/Soyhuce/laravel-safe-request/pull/16
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/1.1.0...1.2.0
+
 ## 1.1.0 - 2024-03-21
 
 ### What's Changed
