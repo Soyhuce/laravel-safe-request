@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 2.0.0 - 2024-12-18
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/Soyhuce/laravel-safe-request/pull/18
+* Upgrade dependencies and php 8.4 by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/19
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/1.2.0...2.0.0
+
 ## 1.2.0 - 2024-09-19
 
 ### What's Changed
