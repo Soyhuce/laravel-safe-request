@@ -8,6 +8,8 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleError;
+use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\ObjectType;
 use function in_array;
 
@@ -34,7 +36,7 @@ class NoFormRequestUnsafeCall implements Rule
 
     /**
      * @param MethodCall $node
-     * @return array<string>
+     * @return list<RuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -54,11 +56,13 @@ class NoFormRequestUnsafeCall implements Rule
         return [];
     }
 
-    private function formatError(string $method): string
+    private function formatError(string $method): RuleError
     {
         $safeMethod = 'safe' . Str::ucfirst($method);
         $safeNullableMethod = 'safeNullable' . Str::ucfirst($method);
 
-        return "Usage of FormRequest::{$method} can be unsafe, prefer using validated data through {$safeMethod} or {$safeNullableMethod} methods.";
+        return RuleErrorBuilder::message("Usage of FormRequest::{$method} can be unsafe, prefer using validated data through {$safeMethod} or {$safeNullableMethod} methods.")
+            ->identifier('request.unsafeCall')
+            ->build();
     }
 }
