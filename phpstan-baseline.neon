@@ -1,16 +1,31 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Anonymous function should return DateTimeInterface but returns bool\\|DateTimeInterface\\|null\\.$#"
+			message: '#^Anonymous function should return DateTimeInterface but returns DateTimeInterface\|false\|null\.$#'
+			identifier: return.type
 			count: 1
 			path: src/FormRequestMixin.php
 
 		-
-			message: "#^Anonymous function should return DateTimeInterface\\|null but returns bool\\|DateTimeInterface\\|null\\.$#"
+			message: '#^Anonymous function should return DateTimeInterface\|null but returns DateTimeInterface\|false\|null\.$#'
+			identifier: return.type
 			count: 1
 			path: src/FormRequestMixin.php
 
 		-
-			message: "#^Anonymous function should return object but returns object\\|null\\.$#"
+			message: '#^Anonymous function should return object but returns object\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/FormRequestMixin.php
+
+		-
+			message: '#^Method Soyhuce\\LaravelSafeRequest\\FormRequestMixin\:\:safeDate\(\) has Carbon\\Exceptions\\InvalidFormatException in PHPDoc @throws tag but it''s not thrown\.$#'
+			identifier: throws.unusedType
+			count: 1
+			path: src/FormRequestMixin.php
+
+		-
+			message: '#^Method Soyhuce\\LaravelSafeRequest\\FormRequestMixin\:\:safeNullableDate\(\) has Carbon\\Exceptions\\InvalidFormatException in PHPDoc @throws tag but it''s not thrown\.$#'
+			identifier: throws.unusedType
 			count: 1
 			path: src/FormRequestMixin.php
