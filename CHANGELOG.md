@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 2.1.0 - 2025-02-24
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/Soyhuce/laravel-safe-request/pull/20
+* Run tests with Laravel 12 by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/21
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/2.0.0...2.1.0
+
 ## 2.0.0 - 2024-12-18
 
 ### What's Changed
