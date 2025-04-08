@@ -4,10 +4,12 @@ namespace Soyhuce\LaravelSafeRequest;
 
 use Closure;
 use DateTimeInterface;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Stringable;
+use RuntimeException;
 use function is_array;
 
 /**
@@ -23,7 +25,7 @@ class FormRequestMixin
         return fn (string $key, string $default = ''): string => transform(
             $this->validated($key),
             fn (mixed $value) => (string) $value,
-            $default
+            $default,
         );
     }
 
@@ -34,7 +36,7 @@ class FormRequestMixin
     {
         return fn (string $key): ?string => transform(
             $this->validated($key),
-            fn (mixed $value) => (string) $value
+            fn (mixed $value) => (string) $value,
         );
     }
 
@@ -48,7 +50,7 @@ class FormRequestMixin
         return fn (string $key, bool $default = false): bool => transform(
             $this->validated($key),
             fn (mixed $value) => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default,
-            $default
+            $default,
         );
     }
 
@@ -61,7 +63,7 @@ class FormRequestMixin
     {
         return fn (string $key): ?bool => transform(
             $this->validated($key),
-            fn (mixed $value) => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)
+            fn (mixed $value) => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
         );
     }
 
@@ -73,7 +75,7 @@ class FormRequestMixin
         return fn (string $key, int $default = 0): int => transform(
             $this->validated($key),
             fn (mixed $value) => filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE) ?? $default,
-            $default
+            $default,
         );
     }
 
@@ -96,7 +98,7 @@ class FormRequestMixin
         return fn (string $key, float $default = 0.0): float => transform(
             $this->validated($key),
             fn (mixed $value) => filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE) ?? $default,
-            $default
+            $default,
         );
     }
 
@@ -107,7 +109,7 @@ class FormRequestMixin
     {
         return fn (string $key): ?float => transform(
             $this->validated($key),
-            fn (mixed $value) => filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE)
+            fn (mixed $value) => filter_var($value, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE),
         );
     }
 
@@ -119,7 +121,7 @@ class FormRequestMixin
         return fn (string $key, string $default = ''): Stringable => transform(
             $this->validated($key),
             fn (mixed $value) => str((string) $value),
-            str($default)
+            str($default),
         );
     }
 
@@ -130,7 +132,7 @@ class FormRequestMixin
     {
         return fn (string $key): ?Stringable => transform(
             $this->validated($key),
-            fn (mixed $value) => str((string) $value)
+            fn (mixed $value) => str((string) $value),
         );
     }
 
@@ -141,7 +143,12 @@ class FormRequestMixin
      */
     public function safeDate(): Closure
     {
-        return fn (string $key, ?string $format = null, ?string $tz = null, $default = 'now'): DateTimeInterface => transform(
+        return fn (
+            string $key,
+            ?string $format = null,
+            ?string $tz = null,
+            $default = 'now',
+        ): DateTimeInterface => transform(
             $this->validated($key) ?? $default,
             function (mixed $value) use ($format, $tz) {
                 if ($value instanceof DateTimeInterface) {
@@ -219,8 +226,11 @@ class FormRequestMixin
      */
     public function safeCollect(): Closure
     {
-        return fn (array|string|null $key = null, Collection $default = new Collection()): Collection => Collection::wrap(
-            (is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key)) ?? $default
+        return fn (
+            array|string|null $key = null,
+            Collection $default = new Collection(),
+        ): Collection => Collection::wrap(
+            (is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key)) ?? $default,
         );
     }
 
@@ -245,7 +255,10 @@ class FormRequestMixin
      */
     public function safeArray(): Closure
     {
-        return fn (array|string|null $key = null, array $default = []): array => (is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key))
+        return fn (
+            array|string|null $key = null,
+            array $default = [],
+        ): array => (is_array($key) ? Arr::only($this->validated(), $key) : $this->validated($key))
             ?? $default;
     }
 
@@ -255,7 +268,30 @@ class FormRequestMixin
     public function safeNullableArray(): Closure
     {
         return fn (array|string|null $key = null): ?array => is_array($key)
-                ? Arr::only($this->validated(), $key)
-                : $this->validated($key);
+            ? Arr::only($this->validated(), $key)
+            : $this->validated($key);
+    }
+
+    /**
+     * Retrieve input from the request as a file.
+     */
+    public function safeFile(): Closure
+    {
+        return fn (string $key): UploadedFile => transform(
+            $this->validated($key),
+            fn (UploadedFile $value) => $value,
+            fn () => throw new RuntimeException("The file '{$key}' must not be null."),
+        );
+    }
+
+    /**
+     * Retrieve input from the request as a nullable file.
+     */
+    public function safeNullableFile(): Closure
+    {
+        return fn (string $key): ?UploadedFile => transform(
+            $this->validated($key),
+            fn (mixed $value) => $value instanceof UploadedFile ? $value : null,
+        );
     }
 }
