@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 2.2.0 - 2025-04-09
+
+### What's Changed
+
+* Ignore phpstan test errors by @bastien-phi in https://github.com/Soyhuce/laravel-safe-request/pull/23
+* Ajout de la méthode safeFile() by @EdenMl in https://github.com/Soyhuce/laravel-safe-request/pull/22
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/2.1.0...2.2.0
+
 ## 2.1.0 - 2025-02-24
 
 ### What's Changed
