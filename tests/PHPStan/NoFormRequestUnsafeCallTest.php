@@ -4,11 +4,11 @@ namespace Soyhuce\LaravelSafeRequest\Tests\PHPStan;
 
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
 use Soyhuce\LaravelSafeRequest\PHPStan\Rules\NoFormRequestUnsafeCall;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class NoFormRequestUnsafeCallTest extends RuleTestCase
 {
     protected function getRule(): Rule
@@ -16,9 +16,7 @@ class NoFormRequestUnsafeCallTest extends RuleTestCase
         return new NoFormRequestUnsafeCall();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rule(): void
     {
         $this->analyse([__DIR__ . '/Rule/no-form-request-unsafe-call.php'], [

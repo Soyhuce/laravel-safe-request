@@ -3,10 +3,11 @@
 namespace Soyhuce\LaravelSafeRequest\Tests\PHPStan;
 
 use PHPStan\Testing\TypeInferenceTestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class TypeTest extends TypeInferenceTestCase
 {
     /**
@@ -17,11 +18,8 @@ class TypeTest extends TypeInferenceTestCase
         yield from self::gatherAssertTypes(__DIR__ . '/Type/form-request.php');
     }
 
-    /**
-     * @dataProvider dataFileAsserts
-     *
-     * @test
-     */
+    #[Test]
+    #[DataProvider('dataFileAsserts')]
     public function fileAsserts(string $assertType, string $file, ...$args): void
     {
         $this->assertFileAsserts($assertType, $file, ...$args);
