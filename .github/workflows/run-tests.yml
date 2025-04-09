@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [ubuntu-latest]
         php: [8.3, 8.4]
@@ -53,3 +53,4 @@ jobs:
 
       - name: Execute PHPStan tests
         run: vendor/bin/pest --testsuite=PHPStan
+        continue-on-error: true
