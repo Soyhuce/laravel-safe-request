@@ -48,7 +48,10 @@
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "cs": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix",
         "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
+        "test": [
+            "vendor/bin/pest --testsuite=Unit",
+            "vendor/bin/pest --testsuite=PHPStan"
+        ],
         "test-coverage": "vendor/bin/pest --coverage",
         "all": [
             "@cs",
