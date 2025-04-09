@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Stringable;
 use Illuminate\Validation\Rules\Enum;
@@ -266,4 +267,32 @@ it('gets form request input as nullable array', function (): void {
         ->safeNullableArray(['foo', 'bar'])->toBe(['bar' => null, 'foo' => [1, 2, 3]])
         ->safeNullableArray('baz')->toBeNull()
         ->safeNullableArray('toto')->toBe([]);
+});
+
+it('gets form request input as uploaded file', function (): void {
+    $foo = UploadedFile::fake()->create('foo.json');
+
+    $request = formRequest(
+        ['foo' => $foo, 'bar' => UploadedFile::fake()->create('bar.json')],
+        ['foo' => 'file']
+    );
+
+    expect($request)
+        ->safeFile('foo')->toBe($foo)
+        ->and(fn () => $request->safeFile('bar'))->toThrow(RuntimeException::class, "The file 'bar' must not be null.")
+        ->and(fn () => $request->safeFile('baz'))->toThrow(RuntimeException::class, "The file 'baz' must not be null.");
+});
+
+it('gets form request input as nullable uploaded file', function (): void {
+    $foo = UploadedFile::fake()->create('foo.json');
+
+    $request = formRequest(
+        ['foo' => $foo, 'bar' => UploadedFile::fake()->create('bar.json')],
+        ['foo' => 'file']
+    );
+
+    expect($request)
+        ->safeNullableFile('foo')->toBe($foo)
+        ->safeNullableFile('bar')->toBeNull()
+        ->safeNullableFile('baz')->toBeNull();
 });
