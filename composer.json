@@ -21,13 +21,13 @@
         "laravel/framework": "^11.0|^12.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.9",
-        "nunomaduro/collision": "^8.0",
-        "larastan/larastan": "^3.0 <3.2",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "nunomaduro/collision": "^8.8",
+        "larastan/larastan": "^3.3.1",
         "orchestra/testbench": "^9.0|^10.0",
-        "pestphp/pest": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "phpstan/extension-installer": "^1.1",
+        "pestphp/pest": "^3.8",
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0"
     },
