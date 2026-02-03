@@ -4,11 +4,10 @@ namespace Soyhuce\LaravelSafeRequest\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use PHPunit\Framework\Attributes\CoversNothing;
 use Soyhuce\LaravelSafeRequest\LaravelSafeRequestServiceProvider;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class TestCase extends Orchestra
 {
     protected function setUp(): void

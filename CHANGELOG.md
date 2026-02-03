@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-safe-request` will be documented in this file.
 
+## 2.3.0 - 2026-03-02
+
+### What's Changed
+
+* Add support for PHP 8.5 in https://github.com/Soyhuce/laravel-safe-request/pull/30
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-safe-request/compare/2.2.0...2.3.0
+
 ## 2.2.0 - 2025-04-09
 
 ### What's Changed
